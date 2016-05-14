@@ -1,0 +1,29 @@
+externIp=`curl -s 'www.icanhazip.com'` 
+resolveIp=`host odieabodie.ddns.net | sed 's%.* %%'` 
+
+pastResolvedIp=`cat config/lastExternIp`
+emailWhiteList=`cat config/emails`
+
+if [[ ${externIp} != ${resolveIp} ]] 
+then 
+	echo [INFO] Resolve IP != External IP
+	echo [RESULT] $resolveIp != $externIp
+	
+	# check if Ip has changed from previous extern Ip
+	if [[ ${externIp} != ${pastResolvedIp} ]]
+	then
+		echo [INFO] Emailing everyone!
+		echo ${externIp} > config/lastExternIp
+
+		#send emails
+		for email in $emailWhiteList;
+		do
+			echo [INFO] Sending email to $email
+		done
+
+	else
+		echo [RESULT] Already Sent emails
+	fi
+else 
+	echo [RESULT] Good IP; 
+fi
