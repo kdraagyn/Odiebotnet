@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>OdieAbodie IP change</title>
+</head>
+<body>
+	<div>
+		<p> New Adobie IP address! </p>
+		<p>The new house IP address is: <font size="8">{ip_address}</font>
+	</div>
+</body>
+</html>
+

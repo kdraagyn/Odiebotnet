@@ -3,6 +3,7 @@ resolveIp=`host odieabodie.ddns.net | sed 's%.* %%'`
 
 pastResolvedIp=`cat config/lastExternIp`
 emailWhiteList=`cat config/emails`
+templateString=`cat config/template`
 
 if [[ ${externIp} != ${resolveIp} ]] 
 then 
@@ -19,6 +20,10 @@ then
 		for email in $emailWhiteList;
 		do
 			echo [INFO] Sending email to $email
+			htmlBody=`echo $templateString | sed "s%{ip_address}%$externIp%"`
+			htmlSubject="New Adobie IP address: ${externIp}\nContent-Type: text/html"
+
+			echo $htmlBody | mail -s "$( echo -e $htmlSubject )" $email
 		done
 
 	else
