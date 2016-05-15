@@ -16,7 +16,7 @@ then
 	if [[ ${externalIp} != ${lastIp} ]]
 	then
 		echo [INFO] Emailing everyone!
-		echo ${externalIp} > config/lastExternIp.conf
+		echo ${externalIp} > config/lastExternalIp.conf
 
 		# send emails
 		for email in "${emailWhiteList[@]}"
