@@ -34,3 +34,6 @@ Check Resolved external IP to the current system IP and email discrepancies.
 
 # Send test email
 	echo `curl www.icanhazip.com` | mail -s "Testy test" gmail@gmail.com
+
+# Pushing to production on abodie local network
+	production ssh://<username>@192.168.0.14/home/odieabotnet/IpCheck/repo
