@@ -56,6 +56,7 @@ then
 	else
 		echo [RESULT $timestamp] Already Sent emails
 	fi
-else 
-	echo [RESULT $timestamp] Good IP
+# commented out so that logs don't get too large during the use of the bot
+#else 
+	# echo [RESULT $timestamp] Good IP
 fi
