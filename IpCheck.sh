@@ -20,6 +20,18 @@ readarray -t emailWhiteList < "$emailPath"
 
 templateString=$(tail $templatePath)
 
+# Check externalIp and resolvedIp have values
+if [[ -z ${externalIp} ]]
+then
+	echo [RESULT $timestamp] No external IP returned
+	exit
+fi
+if [[ -z ${resolvedIp} ]]
+then
+	echo [RESULT $timestamp] No resolved IP returned
+	exit
+fi
+
 if [[ ${externalIp} != ${resolvedIp} ]] 
 then 
 	echo [INFO $timestamp] Resolve IP != External IP
