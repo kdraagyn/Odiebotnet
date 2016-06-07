@@ -1,0 +1,22 @@
+{
+  "name": "odieabotnet",
+  "version": "1.0.0",
+  "description": "api control of house",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kenygaar/OdieBotNet.git"
+  },
+  "author": "Keith Nygaard, Chris Vincent",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kenygaar/OdieBotNet/issues"
+  },
+  "homepage": "https://github.com/kenygaar/OdieBotNet#readme",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
