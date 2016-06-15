@@ -1,4 +1,4 @@
 *.swp
 config/lastExternalIp.conf
-data/
-node_modules/
+node_modules
+data/*
