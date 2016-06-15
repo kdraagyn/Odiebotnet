@@ -7,45 +7,73 @@ var Mailer = (function() {
   var transporter = nodemailer.createTransport('smtps://odieabotnet%40gmail.com:odieabodie@smtp.gmail.com');
   var mailOptions = {
     from: '"OdieBotNet" <odieabotnet@gmail.com>',
-    to: 'keithanygaard@gmail.com',
-    subject: 'Test',
-    text: 'Test nodemailer',
-    html: '<p>Test nodemailer</p>'
+    to: '',
+    subject: '',
+    text: '',
+    html: ''
   };
 
-// , cmichaelvincent@gmail.com 
+  var templatePath = "";
+  var data = {};
 
-  var renderTemplate = function( templatePath, data ) {
+  var renderTemplate = function( templatePath, data, callback ) {
 
     fs.readFile(templatePath, 'utf-8', function( error, source ) {
 
       var template = handlebars.compile( source ); 
       var html = template( data ); 
 
-      return html;
+      callback( html );
     });
   };
 
-  var sendTestMail = function ( ipAddress ) {
-	// TODO: render email html
-	// TODO: Build mailOptions on the fly (N number of recipients
-
-    mailOptions.subject = "New Ip Address: " + ipAddress;
-
-    var html = renderTemplate( '/home/keith/code/OdieBotNet/oldBashScripts/config/template.html', { ip_address : ipAddress } );
-    mailOptions.html = html;
-
-    console.log( "Sending new adobie IP address: " + ipAddress );
-    transporter.sendMail(mailOptions, function(error, info){
-      if(error){
-        return console.log(error);
-      }
-      console.log('Message sent: ' + info.response);
+  var send = function () {
+    renderTemplate(this.templatePath, this.data, function( html ) { 
+      mailOptions.html = html;
+  
+      transporter.sendMail(mailOptions, function(error, info){
+        if(error){
+          return console.log(error);
+        }
+        console.log('Message sent: ' + info.response);
+      });
     });
-  };
+ };
+
+  var setRecipients = function( recipients ) {
+    var toField = "";
+
+    for( recipient in recipients ) {
+      toField += recipients[ recipient ];
+      toField += ',';
+    }
+    toField = toField.slice(0, -1);
+    mailOptions['to'] = toField;
+
+    return this;
+  }
+
+  var setSubject = function( subjectString ) {
+    mailOptions['subject'] = subjectString;
+    return this;
+  }
+
+  var setTemplatePath = function( templatePath ) {
+    this.templatePath = templatePath;
+    return this;
+  }
+
+  var setData = function( data ) {
+    this.data = data;
+    return this;
+  }
 
   return {
-    sendTestMail: sendTestMail
+    setRecipients: setRecipients,
+    setSubject: setSubject,
+    setTemplatePath: setTemplatePath,
+    setData: setData,
+    send: send
   };
 
 })();
