@@ -11,7 +11,6 @@ mongoose.connect('mongodb://localhost/odiebotnet');
 //var db = monk('localhost:27017/odiebotnet');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
 var emails = require('./routes/emails');
 
 var app = express();
@@ -34,7 +33,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 //});
 
 app.use('/', routes);
-app.use('/users', users);
 app.use('/emails', emails);
 
 // catch 404 and forward to error handler
@@ -51,9 +49,10 @@ app.use(function(req, res, next) {
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-    res.render('error', {
+    res.json({
       message: err.message,
-      error: err
+      status: err.status,
+      stacktrace: err.stack
     });
   });
 }
@@ -62,7 +61,7 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-  res.render('error', {
+  res.json({
     message: err.message,
     error: {}
   });
